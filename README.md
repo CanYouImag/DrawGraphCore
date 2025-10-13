@@ -1,4 +1,4 @@
-# CDrawGraphCore - 计算机图形学应用程序
+# DrawGraphCore - 计算机图形学应用程序
 
 > 一个基于 Qt 与 OpenGL 的计算机图形学教学项目，支持 2D/3D 图形绘制、区域填充、三维变换和 Bezier 曲线生成。
 
