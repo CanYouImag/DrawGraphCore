@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="widget">
+      <UniqueIdentifier>{9d81576d-52e9-4dae-a32f-cca4e05584a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model">
+      <UniqueIdentifier>{92fffcb2-bfbd-4f4e-a098-0d7c6f6eb7cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{175f1868-87ea-4e1b-9338-f8f65ffaa023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{034dcdf5-bb5f-489f-a4f9-67686cb4b193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{7b78bde6-eb3a-4a4e-97c0-9b48d65bf26c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="CGWORK1032.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="CGWORK1032.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="CGWORK1032.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="CGWORK1032.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glwidget.cpp">
+      <Filter>widget</Filter>
+    </ClCompile>
+    <ClCompile Include="LineDrawer.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleDrawer.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeManager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="glwidget.h">
+      <Filter>widget</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Line.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeManager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleDrawer.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="LineDrawer.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+</Project>

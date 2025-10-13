@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CGWORK1032Class</class>
+ <widget class="QMainWindow" name="CGWORK1032Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1050</width>
+    <height>617</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CGWORK1032</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="GLWidget" name="glWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>300</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1050</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>图形应用</string>
+    </property>
+    <widget class="QMenu" name="menu_2">
+     <property name="title">
+      <string>图形绘制</string>
+     </property>
+     <addaction name="actionDrawRectangle"/>
+     <addaction name="actionDrawCircle"/>
+     <addaction name="actionSetColor"/>
+    </widget>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>区域填充</string>
+     </property>
+     <addaction name="actionDrawPolygon"/>
+     <addaction name="actionSetColorPolygon"/>
+    </widget>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>三维变换</string>
+     </property>
+     <addaction name="actionDrawCube"/>
+     <addaction name="actionTranslateX"/>
+     <addaction name="actionTranslateY"/>
+     <addaction name="actionTranslateZ"/>
+     <addaction name="actionRotateX"/>
+     <addaction name="actionRotateY"/>
+     <addaction name="actionRotateZ"/>
+     <addaction name="actionSetData"/>
+    </widget>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>绘制曲线</string>
+     </property>
+     <addaction name="actionDrawBezier"/>
+    </widget>
+    <addaction name="menu_2"/>
+    <addaction name="menu_3"/>
+    <addaction name="menu_4"/>
+    <addaction name="menu_5"/>
+   </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="actionClear"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+   </widget>
+   <widget class="QMenu" name="menu_7">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_6"/>
+   <addaction name="menu_7"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionDrawRectangle">
+   <property name="text">
+    <string>绘制矩形</string>
+   </property>
+  </action>
+  <action name="actionDrawCircle">
+   <property name="text">
+    <string>绘制圆形</string>
+   </property>
+  </action>
+  <action name="actionSetColor">
+   <property name="text">
+    <string>设置颜色</string>
+   </property>
+  </action>
+  <action name="actionDrawPolygon">
+   <property name="text">
+    <string>绘制多边形</string>
+   </property>
+  </action>
+  <action name="actionSetColorPolygon">
+   <property name="text">
+    <string>设置颜色</string>
+   </property>
+  </action>
+  <action name="actionDrawCube">
+   <property name="text">
+    <string>绘制立方体</string>
+   </property>
+  </action>
+  <action name="actionTranslateX">
+   <property name="text">
+    <string>延x轴方向平移</string>
+   </property>
+  </action>
+  <action name="actionTranslateY">
+   <property name="text">
+    <string>延y轴方向平移</string>
+   </property>
+  </action>
+  <action name="actionTranslateZ">
+   <property name="text">
+    <string>延z轴方向平移</string>
+   </property>
+  </action>
+  <action name="actionRotateX">
+   <property name="text">
+    <string>绕x轴旋转</string>
+   </property>
+  </action>
+  <action name="actionRotateY">
+   <property name="text">
+    <string>绕y轴旋转</string>
+   </property>
+  </action>
+  <action name="actionRotateZ">
+   <property name="text">
+    <string>绕z轴旋转</string>
+   </property>
+  </action>
+  <action name="actionSetData">
+   <property name="text">
+    <string>设置数据</string>
+   </property>
+  </action>
+  <action name="actionDrawBezier">
+   <property name="text">
+    <string>绘制Bezier曲线</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>清空</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>加载</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>使用说明</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>关于</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">glwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="CGWORK1032.qrc"/>
+ </resources>
+ <connections/>
+</ui>
