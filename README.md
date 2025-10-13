@@ -12,25 +12,45 @@
 
 ## 项目结构
 CGWORK1032/
+
 ├── 核心文件/
+
 │   ├── CGWORK1032.h/cpp          # 主窗口类
+
 │   ├── glwidget.h/cpp            # OpenGL 绘制组件
+
 │   ├── main.cpp                  # 程序入口
+
 │   └── ui_CGWORK1032.h           # UI 界面自动生成文件
+
 ├── 图形基类/
+
 │   ├── Shape.h                   # 图形抽象基类
+
 │   └── ShapeManager.h/cpp        # 图形管理器（增删查改）
+
 ├── 2D图形实现/
+
 │   ├── Line.h/cpp                # 直线类
+
 │   ├── LineDrawer.h/cpp          # Bresenham 直线算法
+
 │   ├── Rectangle.h/cpp           # 矩形类（含橡皮线预览）
+
 │   ├── Circle.h/cpp              # 圆形类
+
 │   ├── CircleDrawer.h/cpp        # 中点圆算法
+
 │   └── Polygon.h/cpp             # 多边形类与边标志填充
+
 ├── 3D图形实现/
+
 │   └── Cube.h/cpp                # 立方体类（含透视投影与变换）
+
 ├── 文档/
+
 │   └── README.md
+
 └── CGWORK1032.pro               # Qt 项目配置文件
 
 
@@ -110,7 +130,7 @@ CGWORK1032/
 
 ---
 
-## 🛠️ 使用指南
+## 使用指南
 
 ### 基本绘制
 1. 菜单选择：`图形绘制` → `绘制矩形` / `绘制圆形`
