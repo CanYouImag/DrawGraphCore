@@ -6,49 +6,45 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
-    <height>617</height>
+    <width>1052</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CGWORK1032</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>120</y>
-      <width>571</width>
-      <height>391</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="GLWidget" name="glWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>400</width>
-         <height>300</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="GLWidget" name="glWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>300</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1050</width>
+     <width>1052</width>
      <height>24</height>
     </rect>
    </property>

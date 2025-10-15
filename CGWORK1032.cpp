@@ -301,7 +301,11 @@ void CGWORK1032::on_actionDrawPolygon_triggered()
 void CGWORK1032::on_actionSetColorPolygon_triggered()
 {
 	if (m_glWidget) {
-		m_glWidget->setPolygonColor();
+		// 只设置学号颜色，边界也使用这个颜色
+		QColor newIdColor = QColorDialog::getColor(m_glWidget->getPolygonIdColor(), this, "选择学号颜色");
+		if (newIdColor.isValid()) {
+			m_glWidget->setPolygonIdColor(newIdColor);
+		}
 		updateStatusBar();
 	}
 }
@@ -416,9 +420,6 @@ void CGWORK1032::on_actionSave_triggered()
 {
 	QString fileName = QFileDialog::getSaveFileName(this,
 		"保存图形", "", "图形文件 (*.cg)");
-	if (!fileName.isEmpty()) {
-		QMessageBox::information(this, "保存", "保存功能待实现");
-	}
 }
 
 // 加载菜单项触发

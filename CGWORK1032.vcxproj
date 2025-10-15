@@ -98,6 +98,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BezierCurve.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CircleDrawer.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -117,6 +118,7 @@
     <QtMoc Include="glwidget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BezierCurve.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CircleDrawer.h" />
     <ClInclude Include="Cube.h" />

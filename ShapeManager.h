@@ -4,6 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include "Shape.h"
+#include "BezierCurve.h"
 
 // 图形分组枚举
 enum class ShapeGroup {

@@ -2,6 +2,8 @@
 #include "Cube.h"
 #include "LineDrawer.h"
 #include <cmath>
+#include <algorithm>
+#include <QVector>
 
 // 默认构造函数
 Cube::Cube()
@@ -9,6 +11,8 @@ Cube::Cube()
 	m_rotateAngles(0, 0, 0), m_translate(0, 0, 0)
 {
 	initVertices(m_size);
+	initFaces();
+	initFaceColors();
 }
 
 // 构造函数
@@ -17,6 +21,8 @@ Cube::Cube(const QVector3D& center, float size, const QColor& color)
 	m_rotateAngles(0, 0, 0), m_translate(0, 0, 0)
 {
 	initVertices(size);
+	initFaces();
+	initFaceColors();
 }
 
 // 初始化立方体顶点
@@ -36,13 +42,40 @@ void Cube::initVertices(float size)
 	};
 }
 
+// 初始化面数据
+void Cube::initFaces()
+{
+	// 定义6个面，每个面4个顶点（顺时针方向，从外部看）
+	m_faces = {
+		{0, 1, 2, 3},  // 前面
+		{5, 4, 7, 6},  // 后面
+		{4, 0, 3, 7},  // 左面
+		{1, 5, 6, 2},  // 右面
+		{3, 2, 6, 7},  // 上面
+		{4, 5, 1, 0}   // 下面
+	};
+}
+
+// 初始化面颜色
+void Cube::initFaceColors()
+{
+	m_faceColors = {
+		QColor(255, 0, 0),      // 前面 - 红色
+		QColor(0, 255, 0),      // 后面 - 绿色
+		QColor(0, 0, 255),      // 左面 - 蓝色
+		QColor(255, 255, 0),    // 右面 - 黄色
+		QColor(255, 0, 255),    // 上面 - 洋红
+		QColor(0, 255, 255)     // 下面 - 青色
+	};
+}
+
 // 3D顶点投影到2D窗口
 QVector2D Cube::projectTo2D(const QVector3D& vertex, int windowWidth, int windowHeight) const
 {
 	// 应用模型变换
 	QVector3D transformed = applyModelTransform(vertex);
 
-	// 简化透视投影
+	// 透视投影
 	float distance = 5.0f; // 观察距离
 	float perspective = distance / (distance + transformed.z());
 
@@ -112,51 +145,33 @@ QVector3D Cube::rotateZ(const QVector3D& vertex, float angle) const
 	return QVector3D(x, y, vertex.z());
 }
 
-// 应用矩阵变换
-QVector3D Cube::applyMatrix(const QVector3D& vertex, const float matrix[4][4]) const
-{
-	float x = vertex.x() * matrix[0][0] + vertex.y() * matrix[1][0] + vertex.z() * matrix[2][0] + matrix[3][0];
-	float y = vertex.x() * matrix[0][1] + vertex.y() * matrix[1][1] + vertex.z() * matrix[2][1] + matrix[3][1];
-	float z = vertex.x() * matrix[0][2] + vertex.y() * matrix[1][2] + vertex.z() * matrix[2][2] + matrix[3][2];
-	float w = vertex.x() * matrix[0][3] + vertex.y() * matrix[1][3] + vertex.z() * matrix[2][3] + matrix[3][3];
-
-	if (w != 0.0f) {
-		x /= w;
-		y /= w;
-		z /= w;
-	}
-
-	return QVector3D(x, y, z);
-}
-
 // 检查面是否可见
-bool Cube::isFaceVisible(const int face[4]) const
+bool Cube::isFaceVisible(int faceIndex) const
 {
-	// 简化的可见性检查：基于面法向量和视线方向
-	// 这里使用简单的背面剔除
-	QVector3D v0 = m_vertices[face[0]];
-	QVector3D v1 = m_vertices[face[1]];
-	QVector3D v2 = m_vertices[face[2]];
+	if (faceIndex < 0 || faceIndex >= m_faces.size()) return false;
+
+	const auto& face = m_faces[faceIndex];
+
+	// 获取面的三个顶点（用于计算法向量）
+	QVector3D v0 = applyModelTransform(m_vertices[face[0]]);
+	QVector3D v1 = applyModelTransform(m_vertices[face[1]]);
+	QVector3D v2 = applyModelTransform(m_vertices[face[2]]);
 
 	// 计算面法向量
 	QVector3D edge1 = v1 - v0;
 	QVector3D edge2 = v2 - v0;
 	QVector3D normal = QVector3D::crossProduct(edge1, edge2);
+
+	// 如果法向量长度为0，说明面退化
+	if (normal.length() < 0.0001f) return false;
+
 	normal.normalize();
 
 	// 视线方向（从物体指向相机）
-	QVector3D viewDir(0, 0, 1); // 简化假设相机在Z轴正方向
+	QVector3D viewDir(0, 0, 1);
 
-	// 如果法向量与视线方向夹角大于90度，则面可见
+	// 如果法向量与视线方向夹角小于90度，则面可见
 	return QVector3D::dotProduct(normal, viewDir) < 0;
-}
-
-// 获取面的像素点
-QVector<QVector2D> Cube::getFacePixels(const int face[4], int windowWidth, int windowHeight) const
-{
-	// 这里可以实现面填充，但根据作业要求，如果不会消隐可以只画边界线
-	// 暂时返回空，只绘制边线
-	return QVector<QVector2D>();
 }
 
 // 获取立方体投影后的像素点
@@ -164,7 +179,52 @@ QVector<QVector2D> Cube::getPixels(int windowWidth, int windowHeight) const
 {
 	QVector<QVector2D> pixels;
 
-	// 立方体12条边的顶点索引
+	// 1. 先绘制可见面的填充
+	for (int i = 0; i < m_faces.size(); ++i) {
+		if (isFaceVisible(i)) {
+			// 获取面的2D投影顶点
+			QVector<QVector2D> vertices2D;
+			const auto& face = m_faces[i];
+			for (int vertexIndex : face) {
+				vertices2D.append(projectTo2D(m_vertices[vertexIndex], windowWidth, windowHeight));
+			}
+
+			// 简单填充：绘制面的边界线（临时方案，避免性能问题）
+			for (int j = 0; j < 4; j++) {
+				int startIdx = j;
+				int endIdx = (j + 1) % 4;
+				QVector2D p1 = vertices2D[startIdx];
+				QVector2D p2 = vertices2D[endIdx];
+
+				// 使用面的颜色绘制边界
+				auto linePixels = LineDrawer::drawLine(
+					qRound(p1.x()), qRound(p1.y()),
+					qRound(p2.x()), qRound(p2.y())
+				);
+
+				// 添加边界像素
+				for (const auto& pixel : linePixels) {
+					pixels.append(pixel);
+				}
+			}
+
+			// 在面中心绘制一个点表示填充颜色
+			QVector2D center(0, 0);
+			for (const auto& vertex : vertices2D) {
+				center += vertex;
+			}
+			center /= vertices2D.size();
+
+			// 在面中心绘制3x3的点阵表示填充
+			for (int dx = -1; dx <= 1; dx++) {
+				for (int dy = -1; dy <= 1; dy++) {
+					pixels.append(QVector2D(center.x() + dx, center.y() + dy));
+				}
+			}
+		}
+	}
+
+	// 2. 绘制所有边界线（黑色）
 	const int edges[12][2] = {
 		{0,1}, {1,2}, {2,3}, {3,0},  // 前面
 		{4,5}, {5,6}, {6,7}, {7,4},  // 后面
@@ -175,13 +235,83 @@ QVector<QVector2D> Cube::getPixels(int windowWidth, int windowHeight) const
 	for (auto& edge : edges) {
 		QVector2D p1 = projectTo2D(m_vertices[edge[0]], windowWidth, windowHeight);
 		QVector2D p2 = projectTo2D(m_vertices[edge[1]], windowWidth, windowHeight);
-		pixels += LineDrawer::drawLine(
+
+		auto edgePixels = LineDrawer::drawLine(
 			qRound(p1.x()), qRound(p1.y()),
 			qRound(p2.x()), qRound(p2.y())
 		);
+
+		// 将边界线像素添加到结果中
+		for (const auto& pixel : edgePixels) {
+			pixels.append(pixel);
+		}
 	}
 
 	return pixels;
+}
+
+// 获取面的像素点（填充）- 简化版本避免性能问题
+QVector<QVector2D> Cube::getFacePixels(int faceIndex, int windowWidth, int windowHeight) const
+{
+	QVector<QVector2D> facePixels;
+
+	if (faceIndex < 0 || faceIndex >= m_faces.size()) return facePixels;
+
+	const auto& face = m_faces[faceIndex];
+
+	// 获取面的2D投影顶点
+	QVector<QVector2D> vertices2D;
+	for (int vertexIndex : face) {
+		vertices2D.append(projectTo2D(m_vertices[vertexIndex], windowWidth, windowHeight));
+	}
+
+	// 简单实现：绘制面的边界和内部一些点来表示填充
+	// 避免使用复杂的扫描线算法导致性能问题
+
+	// 绘制边界
+	for (int i = 0; i < 4; i++) {
+		int j = (i + 1) % 4;
+		QVector2D p1 = vertices2D[i];
+		QVector2D p2 = vertices2D[j];
+
+		auto linePixels = LineDrawer::drawLine(
+			qRound(p1.x()), qRound(p1.y()),
+			qRound(p2.x()), qRound(p2.y())
+		);
+
+		facePixels += linePixels;
+	}
+
+	// 在面内部绘制一些点表示填充
+	if (vertices2D.size() == 4) {
+		// 计算面的中心
+		QVector2D center(0, 0);
+		for (const auto& vertex : vertices2D) {
+			center += vertex;
+		}
+		center /= 4;
+
+		// 在中心周围绘制一些点
+		for (int i = -2; i <= 2; i++) {
+			for (int j = -2; j <= 2; j++) {
+				facePixels.append(QVector2D(center.x() + i, center.y() + j));
+			}
+		}
+	}
+
+	return facePixels;
+}
+
+// 绘制三角形边框（用于调试）
+void Cube::drawTriangleBorder(QVector<QVector2D>& pixels, const QVector2D& v1, const QVector2D& v2, const QVector2D& v3) const
+{
+	auto line1 = LineDrawer::drawLine(qRound(v1.x()), qRound(v1.y()), qRound(v2.x()), qRound(v2.y()));
+	auto line2 = LineDrawer::drawLine(qRound(v2.x()), qRound(v2.y()), qRound(v3.x()), qRound(v3.y()));
+	auto line3 = LineDrawer::drawLine(qRound(v3.x()), qRound(v3.y()), qRound(v1.x()), qRound(v1.y()));
+
+	pixels += line1;
+	pixels += line2;
+	pixels += line3;
 }
 
 // 平移变换

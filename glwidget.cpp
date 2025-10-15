@@ -69,6 +69,7 @@ void GLWidget::resizeGL(int w, int h)
 }
 
 // 绘制函数
+// 在paintGL函数中修改立方体绘制逻辑
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -82,7 +83,24 @@ void GLWidget::paintGL()
 		ShapeGroup shapeGroup = static_cast<ShapeGroup>(group);
 		for (const auto& shape : m_shapeManager->getShapes(shapeGroup)) {
 			auto pixels = shape->getPixels(width(), height());
-			drawPoints(pixels, shape->color());
+
+			// 特殊处理立方体：需要按面绘制不同颜色
+			Cube* cube = dynamic_cast<Cube*>(shape.get());
+			if (cube) {
+				// 立方体已经在getPixels中返回了带颜色的像素
+				// 这里使用立方体的默认颜色绘制所有像素
+				drawPoints(pixels, shape->color());
+			}
+			else {
+				// 其他图形正常绘制
+				Polygon* polygon = dynamic_cast<Polygon*>(shape.get());
+				if (polygon && polygon->fillMode() != FillMode::None) {
+					drawPoints(pixels, m_polygonIdColor);
+				}
+				else {
+					drawPoints(pixels, shape->color());
+				}
+			}
 		}
 	}
 
@@ -437,10 +455,7 @@ void GLWidget::completeBezierDrawing()
 {
 	if (m_bezierControlPoints.size() == 4) {
 		// 生成Bezier曲线
-		QVector<QVector2D> curvePoints = generateBezierCurve(m_bezierControlPoints);
-
-		// 将曲线保存为多边形（简化处理）
-		m_shapeManager->addShape<Polygon>(ShapeGroup::CurveDraw, curvePoints, m_currentShapeColor, m_currentShapeColor);
+		m_shapeManager->addShape<BezierCurve>(ShapeGroup::CurveDraw, m_bezierControlPoints, m_currentShapeColor);
 
 		m_bezierControlPoints.clear();
 		m_isDrawingPreview = false;

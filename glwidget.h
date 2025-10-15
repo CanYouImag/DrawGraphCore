@@ -12,6 +12,8 @@
 #include "ShapeManager.h"
 #include "Cube.h"
 
+// 前向声明
+class BezierCurve;
 // 绘制模式枚举
 enum class DrawMode
 {
@@ -60,6 +62,12 @@ public:
 
 	// 获取当前变换模式
 	TransformMode getCurrentTransformMode() const { return m_transformMode; }
+
+	// 获取多边形填充学号颜色
+	QColor getPolygonIdColor() const { return m_polygonIdColor; }
+
+	// 设置多边形学号颜色
+	void setPolygonIdColor(const QColor& color) { m_polygonIdColor = color; }
 
 public slots:
 	// 设置绘制模式

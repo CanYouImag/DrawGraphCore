@@ -82,6 +82,9 @@
     <ClCompile Include="ShapeManager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="glwidget.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="LineDrawer.h">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
