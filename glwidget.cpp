@@ -87,8 +87,7 @@ void GLWidget::paintGL()
 			// 特殊处理立方体：需要按面绘制不同颜色
 			Cube* cube = dynamic_cast<Cube*>(shape.get());
 			if (cube) {
-				// 立方体已经在getPixels中返回了带颜色的像素
-				// 这里使用立方体的默认颜色绘制所有像素
+				// 使用立方体的默认颜色绘制所有像素
 				drawPoints(pixels, shape->color());
 			}
 			else {
@@ -357,14 +356,19 @@ void GLWidget::setDrawMode(DrawMode mode)
 	m_tempPolygonVertices.clear();
 	m_bezierControlPoints.clear();
 
-	if (mode == DrawMode::Cube && !m_cube) {
-		m_cube = new Cube(QVector3D(0, 0, -5), 1.0f, Qt::white);
+	if (mode == DrawMode::Cube) {
+		// 清除旧立方体
+		m_shapeManager->clearGroup(ShapeGroup::ThreeDTransform);
+
+		// 创建新立方体
+		m_cube = new Cube(QVector3D(0, 0, 0), 1.0f, Qt::black);
 		m_shapeManager->addShape<Cube>(ShapeGroup::ThreeDTransform, *m_cube);
+
+		// 强制更新显示
+		update();
 	}
 
 	setCursor(mode == DrawMode::None ? Qt::ArrowCursor : Qt::CrossCursor);
-
-	// 发出信号
 	emit drawModeChanged(mode);
 }
 
